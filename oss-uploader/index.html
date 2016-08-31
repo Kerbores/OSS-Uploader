@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>OSS Uploader</title>
+
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+		<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+		<link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	</head>
+
+	<body>
+		<h1>Hello OSS uploader</h1>
+		<span class="btn btn-success oss-upload">
+			<i class="glyphicon glyphicon-plus"></i> <span>Add files...</span> <input type="file" name="files[]"> <input type="hidden" id="key" />
+		</span>
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://gosspublic.alicdn.com/aliyun-oss-sdk-4.4.4.min.js"></script>
+		<script type="text/javascript" src="js/oss-uploader.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+		<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="layer/layer.js" ></script>
+		<script type="text/javascript" src="layer/extend/layer.ext.js" ></script>
+		<script type="text/javascript">
+			$(function() {
+				$('.oss-upload').ossuploader({
+					credUrl: 'json/cred.json',
+					done: function(result) { //上传成功的回调,根据实际情况自行实现
+						console.log(result);
+						$('.oss-upload').after('<img  src="' + result.url + '"/>');
+						$('#key').val(result.name);
+					},
+					error: function(err) { //上传失败的错误消息提示
+						layer.msg(err);
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>
